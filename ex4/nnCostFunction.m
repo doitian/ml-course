@@ -79,8 +79,8 @@ Theta1_grad = D2' * A1;
 Theta2_grad = D3' * A2;
 
 if lambda != 0
-  Theta1_grad(:, 2:end) += Theta1(:, 2:end);
-  Theta2_grad(:, 2:end) += Theta2(:, 2:end);
+  Theta1_grad(:, 2:end) += Theta1(:, 2:end) .* lambda;
+  Theta2_grad(:, 2:end) += Theta2(:, 2:end) .* lambda;
 end
 
 % Part 3: Implement regularization with the cost function and gradients.
