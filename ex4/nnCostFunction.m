@@ -71,23 +71,9 @@ J = - sum(sum(Y .* log(A3) + ((1- Y) .* log(1 - A3)))) / m;
 %               and Theta2_grad from Part 2.
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if lambda != 0
+  J = J + lambda / 2 / m * sum([Theta1(:, 2:end)(:); Theta2(:, 2:end)(:)]);
+end
 
 % -------------------------------------------------------------
 
