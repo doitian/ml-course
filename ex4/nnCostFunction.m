@@ -27,8 +27,8 @@ m = size(X, 1);
          
 % You need to return the following variables correctly 
 J = 0;
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+## Theta1_grad = zeros(size(Theta1));
+## Theta2_grad = zeros(size(Theta2));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -39,9 +39,10 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 
-Z2 = [ones(m, 1), X] * Theta1';
-A2 = sigmoid(Z2);
-Z3 = [ones(m, 1), A2] * Theta2';
+A1 = [ones(m, 1), X];
+Z2 = A1 * Theta1';
+A2 = [ones(m, 1), sigmoid(Z2)];
+Z3 = A2 * Theta2';
 A3 = sigmoid(Z3);
 
 Y = eye(num_labels)(y, :);
@@ -63,6 +64,25 @@ J = - sum(sum(Y .* log(A3) + ((1- Y) .* log(1 - A3)))) / m;
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+D3 = A3 - Y;
+D2 = D3 * Theta2(:, 2:end) .* sigmoidGradient(Z2);
+
+## A1       m x input+1
+## A2       m x hidden+1
+## Z2,D2    m x hidden
+## Z3,A3,D3 m x output
+
+## hidden x (input+1)
+Theta1_grad = D2' * A1;
+## output x (hidden+1)
+Theta2_grad = D3' * A2;
+
+if lambda != 0
+  Theta1_grad(:, 2:end) += Theta1(:, 2:end);
+  Theta2_grad(:, 2:end) += Theta2(:, 2:end);
+end
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -80,7 +100,7 @@ end
 % =========================================================================
 
 % Unroll gradients
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
+grad = [Theta1_grad(:) ; Theta2_grad(:)] ./ m;
 
 
 end
