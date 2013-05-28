@@ -24,11 +24,13 @@ diff = h - y;
 
 J = (diff' * diff + lambda * sum(theta(2:end) .^ 2)) / (2 * m);
 
-grad = X' * diff;
-grad(2:end) += lambda * theta(2:end);
+if nargout() > 1
+  grad = X' * diff;
+  grad(2:end) += lambda * theta(2:end);
 
 % =========================================================================
 
-grad = grad(:) / m;
+  grad = grad(:) / m;
+end
 
 end
