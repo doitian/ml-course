@@ -24,10 +24,26 @@ sigma = 0.3;
 %
 
 
+candidates = [0.01 0.03 0.1 0.3 1 3 10 30]
+numCandidates = length(candidates)
 
+bestSeen = false
 
+for i = 1:numCandidates
+  testC = candidates(i);
+  for j = 1:numCandidates
+    testSigma = candidates(j);
 
-
+    model= svmTrain(X, y, testC, @(x1, x2) gaussianKernel(x1, x2, testSigma));
+    predications = svmPredict(model, Xval);
+    error = mean(double(predications ~= yval));
+    if isbool(bestSeen) || error < bestSeen
+      bestSeen = error;
+      C = testC;
+      sigma = testSigma;
+    end
+  end
+end
 
 % =========================================================================
 
