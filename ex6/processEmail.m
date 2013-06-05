@@ -97,14 +97,13 @@ while ~isempty(email_contents)
     %       str2). It will return 1 only if the two strings are equivalent.
     %
 
-
-
-
-
-
-
-
-
+    wordIndex = 1;
+    while wordIndex <= length(vocabList) && !strcmp(vocabList{wordIndex}, str)
+      wordIndex += 1;
+    end
+    if wordIndex <= length(vocabList)
+      word_indices(end + 1) = wordIndex;
+    end
 
     % =============================================================
 
