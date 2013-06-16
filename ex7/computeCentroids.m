@@ -26,12 +26,8 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+counts = accumarray(idx(:), 1);
+centroids = accumdim(idx(:), X) ./ repmat(counts, 1, n);
 
 % =============================================================
 

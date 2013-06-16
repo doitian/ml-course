@@ -21,11 +21,11 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+for i = 1:length(idx)
+  x = repmat(X(i, :), K, 1);
+  distances = norm(x - centroids, 2, "rows");
+  [~, idx(i)] = min(distances);
+end
 
 % =============================================================
 
