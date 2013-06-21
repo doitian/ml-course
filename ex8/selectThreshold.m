@@ -27,13 +27,12 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
 
+    predications = (pval < epsilon);
+    truePositive = yval & predications;
+    precision = sum(truePositive) / sum(predications);
+    recall = sum(truePositive) / sum(yval);
 
-
-
-
-
-
-
+    F1 = 2 * precision * recall / (precision + recall);
 
     % =============================================================
 
